@@ -9,8 +9,26 @@ def read_from_input
   end
 end
 
-def solve(line_pair, case_number)
-  print_case_solution(case_number, line_pair)
+def reader_pages(steps, total_pages)
+  planned_pages = []
+  all_pages = (1..total_pages).to_a
+
+  steps.each do |step|
+    planned_pages << all_pages.select {|number| number%step==0}
+  end
+  planned_pages.flatten
+end
+
+
+
+def solve(lines, case_number)
+  total_pages = lines[0].split(' ')[0].to_i
+  steps = lines[2].split.map{|n| n.to_i}
+  missed_pages = lines[1].split(' ').map{|n| n.to_i}
+
+  readed_pages = reader_pages(steps, total_pages) - missed_pages
+
+  print_case_solution(case_number, readed_pages.count)
 end
 
 def print_case_solution(case_number, line_pair)
